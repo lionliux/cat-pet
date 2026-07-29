@@ -1,0 +1,41 @@
+# .gitee-ci.yml
+version: '1.0'
+
+jobs:
+  build:
+    # 指定运行环境为 Windows[citation:1][citation:6]
+    runs-on: windows-latest
+    steps:
+      # 1. 拉取你的代码[citation:1]
+      - name: Checkout code
+        uses: git-checkout@v1
+
+      # 2. 安装 Python[citation:6]
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # 3. 安装项目依赖 (pillow 和 pyinstaller)[citation:2][citation:7]
+      - name: Install dependencies
+        run: |
+          pip install pillow pyinstaller
+
+      # 4. 预处理图片（和你的 bat 脚本逻辑一致）[citation:2]
+      - name: Preprocess images
+        run: python preprocess_images.py
+
+      # 5. 执行 PyInstaller 打包[citation:2][citation:6]
+      - name: Build EXE
+        run: |
+          pyinstaller --noconfirm --onefile --windowed `
+            --name "加菲猫桌宠" `
+            --add-data "assets;assets" `
+            cat_pet.py
+
+      # 6. 上传打包好的 EXE，你可以在网页上下载[citation:6][citation:11]
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: 加菲猫桌宠
+          path: dist/加菲猫桌宠.exe
