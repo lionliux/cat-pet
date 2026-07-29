@@ -20,11 +20,11 @@ jobs:
     - name: 检查文件结构
       run: |
         echo "=== 根目录 ==="
-        ls -la
+        dir
         echo "=== cat_pet_project 目录 ==="
-        ls -la cat_pet_project/ || echo "cat_pet_project 不存在"
+        dir cat_pet_project || echo "cat_pet_project 不存在"
         echo "=== assets 目录 ==="
-        ls -la cat_pet_project/assets/ || echo "assets 不存在"
+        dir cat_pet_project\assets || echo "assets 不存在"
     
     - name: 安装依赖库
       run: |
@@ -44,7 +44,7 @@ jobs:
     - name: 检查打包结果
       run: |
         echo "=== dist 目录 ==="
-        ls -la cat_pet_project/dist/ || echo "dist 不存在"
+        dir cat_pet_project\dist || echo "dist 不存在"
     
     - name: 上传 EXE 文件
       uses: actions/upload-artifact@v4
