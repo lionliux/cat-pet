@@ -1,0 +1,36 @@
+name: 打包 Windows EXE
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: 设置 Python 环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: 安装依赖库
+      run: |
+        pip install pillow pyinstaller -i https://pypi.tuna.tsinghua.edu.cn/simple
+    
+    - name: 预处理图片
+      run: |
+        python preprocess_images.py
+    
+    - name: 打包 EXE
+      run: |
+        pyinstaller --noconfirm --onefile --windowed --name "加菲猫桌宠" --add-data "assets;assets" cat_pet.py
+    
+    - name: 上传 EXE 文件
+      uses: actions/upload-artifact@v4
+      with:
+        name: 加菲猫桌宠
+        path: dist/加菲猫桌宠.exe
