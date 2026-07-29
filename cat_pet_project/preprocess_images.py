@@ -4,6 +4,11 @@
 运行一次即可，预处理后的图片会让桌宠启动更快
 """
 
+import sys
+import io
+# 强制使用 UTF-8 输出（解决 Windows 编码问题）
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 from PIL import Image
 import os
 import shutil
@@ -110,7 +115,7 @@ def process_all_images():
     assets_dir = os.path.join(script_dir, "assets")
 
     if not os.path.exists(assets_dir):
-        print(" 找不到 assets 文件夹！")
+        print("[错误] 找不到 assets 文件夹！")
         return
 
     # 备份目录
@@ -125,13 +130,13 @@ def process_all_images():
             image_files.append(f)
 
     if not image_files:
-        print(" assets 文件夹中没有找到图片！")
+        print("[错误] assets 文件夹中没有找到图片！")
         return
 
     print("=" * 50)
-    print("   猫咪图片预处理工具")
+    print("  [猫咪图片预处理工具]")
     print("=" * 50)
-    print(f"\n 找到 {len(image_files)} 张图片\n")
+    print(f"\n[信息] 找到 {len(image_files)} 张图片\n")
 
     for i, filename in enumerate(image_files, 1):
         input_path = os.path.join(assets_dir, filename)
@@ -147,16 +152,16 @@ def process_all_images():
         # 处理图片
         try:
             remove_background_smart(input_path, output_path)
-            print(f"   已保存: cat{i}.png\n")
+            print(f"  [完成] 已保存: cat{i}.png\n")
         except Exception as e:
-            print(f"   处理失败: {e}\n")
+            print(f"  [失败] 处理失败: {e}\n")
 
     print("=" * 50)
-    print("   所有图片处理完成！")
+    print("  [完成] 所有图片处理完成！")
     print("=" * 50)
-    print(f"\n原始图片备份: {backup_dir}")
-    print(" 现在可以运行 cat_pet.py 启动桌宠了！")
-    print("\n 提示：如果自动抠图效果不理想，")
+    print(f"\n[信息] 原始图片备份: {backup_dir}")
+    print("[信息] 现在可以运行 cat_pet.py 启动桌宠了！")
+    print("\n[提示] 如果自动抠图效果不理想，")
     print("   可以用 remove.bg 等在线工具手动抠图，")
     print("   然后替换 assets 文件夹里的 cat1.png ~ cat3.png")
 
