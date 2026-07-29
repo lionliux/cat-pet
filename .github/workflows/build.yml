@@ -17,34 +17,14 @@ jobs:
       with:
         python-version: '3.10'
     
-    - name: 检查文件结构
-      run: |
-        echo "=== 根目录 ==="
-        dir
-        echo "=== cat_pet_project 目录 ==="
-        dir cat_pet_project || echo "cat_pet_project 不存在"
-        echo "=== assets 目录 ==="
-        dir cat_pet_project\assets || echo "assets 不存在"
-    
     - name: 安装依赖库
       run: |
         pip install pillow pyinstaller -i https://pypi.tuna.tsinghua.edu.cn/simple
     
-    - name: 进入项目目录并预处理图片
-      run: |
-        cd cat_pet_project
-        python preprocess_images.py
-      continue-on-error: true
-    
-    - name: 进入项目目录并打包 EXE
+    - name: 打包 EXE
       run: |
         cd cat_pet_project
         pyinstaller --noconfirm --onefile --windowed --name "加菲猫桌宠" --add-data "assets;assets" cat_pet.py
-    
-    - name: 检查打包结果
-      run: |
-        echo "=== dist 目录 ==="
-        dir cat_pet_project\dist || echo "dist 不存在"
     
     - name: 上传 EXE 文件
       uses: actions/upload-artifact@v4
