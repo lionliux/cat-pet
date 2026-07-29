@@ -131,7 +131,7 @@ def process_all_images():
     print("=" * 50)
     print("   猫咪图片预处理工具")
     print("=" * 50)
-    print(f"\n📁 找到 {len(image_files)} 张图片\n")
+    print(f"\n 找到 {len(image_files)} 张图片\n")
 
     for i, filename in enumerate(image_files, 1):
         input_path = os.path.join(assets_dir, filename)
@@ -154,9 +154,9 @@ def process_all_images():
     print("=" * 50)
     print("   所有图片处理完成！")
     print("=" * 50)
-    print(f"\n📝原始图片备份: {backup_dir}")
+    print(f"\n原始图片备份: {backup_dir}")
     print(" 现在可以运行 cat_pet.py 启动桌宠了！")
-    print("\n💡 提示：如果自动抠图效果不理想，")
+    print("\n 提示：如果自动抠图效果不理想，")
     print("   可以用 remove.bg 等在线工具手动抠图，")
     print("   然后替换 assets 文件夹里的 cat1.png ~ cat3.png")
 
